@@ -26,10 +26,10 @@ class GotoolsOracleCommand(sublime_plugin.TextCommand):
     package_scope = []
     for p in GoToolsSettings.get().build_packages:
       package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
-    for p in GoToolsSettings.get().test_packages:
-      package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
-    for p in GoToolsSettings.get().tagged_test_packages:
-      package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
+    # for p in GoToolsSettings.get().test_packages:
+    #   package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
+    # for p in GoToolsSettings.get().tagged_test_packages:
+    #   package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
 
     sublime.active_window().run_command("hide_panel", {"panel": "output.gotools_oracle"})
 

@@ -109,7 +109,7 @@ class ToolRunner():
       env["GOROOT"] = GoToolsSettings.get().goroot
 
       Logger.log("\tcommand:     " + " ".join(cmd))
-      Logger.log("\tenvironment: " + str(env))
+      # Logger.log("\tenvironment: " + str(env))
 
       # Hide popups on Windows
       si = None

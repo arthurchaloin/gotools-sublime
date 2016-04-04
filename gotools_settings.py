@@ -129,12 +129,20 @@ class GoToolsSettings():
     return self.get_setting("format_backend")
 
   @property
+  def lint_on_save(self):
+    return self.get_setting("lint_on_save")
+
+  @property
+  def lint_backend(self):
+    return self.get_setting("lint_backend")
+
+  @property
   def autocomplete(self):
     return self.get_setting("autocomplete")
 
-  @property
-  def goto_def_backend(self):
-    return self.get_setting("goto_def_backend")
+  # @property
+  # def goto_def_backend(self):
+  #   return self.get_setting("goto_def_backend")
 
   @property
   def project_package(self):
@@ -144,25 +152,25 @@ class GoToolsSettings():
   def build_packages(self):
     return self.get_setting("build_packages", [])
 
-  @property
-  def test_packages(self):
-    return self.get_setting("test_packages", [])
+  # @property
+  # def test_packages(self):
+  #   return self.get_setting("test_packages", [])
 
-  @property
-  def tagged_test_tags(self):
-    return self.get_setting("tagged_test_tags", [])
+  # @property
+  # def tagged_test_tags(self):
+  #   return self.get_setting("tagged_test_tags", [])
 
-  @property
-  def tagged_test_packages(self):
-    return self.get_setting("tagged_test_packages", [])
+  # @property
+  # def tagged_test_packages(self):
+  #   return self.get_setting("tagged_test_packages", [])
 
-  @property
-  def verbose_tests(self):
-    return self.get_setting("verbose_tests", False)
+  # @property
+  # def verbose_tests(self):
+  #   return self.get_setting("verbose_tests", False)
 
-  @property
-  def test_timeout(self):
-    return self.get_setting("test_timeout", None)
+  # @property
+  # def test_timeout(self):
+  #   return self.get_setting("test_timeout", None)
 
   # Load PATH, GOPATH, GOROOT, and anything `go env` can provide. Use the
   # precedence order: Login shell > OS env > go env. The environment is
@@ -211,7 +219,7 @@ class GoToolsSettings():
     cmdenv = os.environ.copy()
     for k in env:
       cmdenv[k] = env[k]
-    goenv, stderr = subprocess.Popen([gobinary, 'env'], 
+    goenv, stderr = subprocess.Popen([gobinary, 'env'],
       stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, startupinfo=si, env=cmdenv).communicate()
     if stderr and len(stderr) > 0:
       raise Exception("'{0} env' returned an error: {1}".format(gobinary, stderr.decode()))

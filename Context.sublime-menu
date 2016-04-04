@@ -1,34 +1,17 @@
 [
   {
-    "command": "build",
-    "caption": "Go Build"
+    "command": "gotools_goto_def",
+    "caption": "GoTools: Go to definition"
   },
   {
-    "command": "build",
-    "caption": "Go Tests",
-    "args": {
-      "variant": "Run Tests"
-    }
+    "command": "gotools_rename",
+    "caption": "GoTools: Rename"
   },
   {
-    "command": "build",
-    "caption": "Go Test at Cursor",
+  	"caption": "GoTools: Oracle: Callers",
+    "command": "gotools_oracle",
     "args": {
-      "variant": "Run Test at Cursor"
-    }
-  },
-  {
-    "command": "build",
-    "caption": "Go Test Current Package",
-    "args": {
-      "variant": "Run Current Package Tests"
-    }
-  },
-  {
-    "command": "build",
-    "caption": "Go Test Tagged",
-    "args": {
-      "variant": "Run Tagged Tests"
+      "command": "callers"
     }
   }
 ]

@@ -1,6 +1,28 @@
-### :warning: This project is no longer maintained. :warning:
+### This project is forked from GoTools(by ironcladlou) ###
 
-I recommend [Visual Studio Code](https://code.visualstudio.com) with the [vscode-go](https://github.com/Microsoft/vscode-go) extension for a nicer Go programming experience.
+Since ironcladlou has decided to abandon GoTools project, I extract the features from GoTools and use together with Golang Build (by wbond: github.com/golang/sublime-build):
+- auto-complete: with gocode
+- auto-format: with gofmt or goimports
+- goto definition: with oracle
+- rename: with gorename
+
+Removed features:
+- Go syntax highlight: replaced by sublime's native support
+- Go build & test system: replaced by "Golang Build" (search in package-control)
+- godef support: only use oracle for "Go to definition"
+- Settings are simplified for easier usage
+
+Added features:
+- auto-lint: with golint or govet
+
+Refer to these discussions:
+https://github.com/ironcladlou/GoTools/issues/121
+https://github.com/ironcladlou/GoTools/issues/128
+
+### Usage
+- Step 1: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
+- Step 2: Install "GoTools EX" from package control.
+- Step 3(optional): Config the Settings for GoTools and your project. You can refer to the `GoTools.sublime-settings` and `ExampleProject.sublime-project` under this repository. If you want to use the full features of oracle tool, the configuration of your project is necessary.
 
 # GoTools
 

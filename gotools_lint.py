@@ -1,0 +1,108 @@
+import sublime
+import sublime_plugin
+import re
+import os
+
+from .gotools_util import Buffers
+from .gotools_util import GoBuffers
+from .gotools_util import Logger
+from .gotools_util import ToolRunner
+from .gotools_settings import GoToolsSettings
+
+class GotoolsLintOnSave(sublime_plugin.EventListener):
+  def on_post_save(self, view):
+    if not GoBuffers.is_go_source(view): return
+    if not GoToolsSettings.get().lint_on_save: return
+    view.run_command('gotools_lint')
+
+class GotoolsLint(sublime_plugin.TextCommand):
+  def is_enabled(self):
+    return GoBuffers.is_go_source(self.view)
+
+  def run(self, edit):
+    if GoToolsSettings.get().lint_backend == "golint":
+      self.run_golint()
+    elif GoToolsSettings.get().lint_backend == "govet":
+      self.run_govet()
+    elif GoToolsSettings.get().lint_backend == "both":
+      rc = self.run_govet()
+      if rc != 1:
+        self.run_golint()
+    else:
+      sublime.error_message("Must choose a linter: govet or golint or both")
+      return
+
+  def run_govet(self):
+    command = "go"
+    args = ["vet", "-x"]
+
+    for p in GoToolsSettings.get().build_packages:
+      args.append(os.path.join(GoToolsSettings.get().project_package, p))
+
+    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60)
+
+    # Clear previous syntax error marks
+    self.view.erase_regions("mark")
+
+    if rc == 1:
+      # Show syntax errors and bail
+      self.show_syntax_errors(stderr)
+    elif rc != 0:
+      # Ermmm...
+      Logger.log("unknown govet error (" + str(rc) + ") stderr:\n" + stderr)
+    else:
+      # Everything's good, hide the syntax error panel
+      self.view.window().run_command("hide_panel", {"panel": "output.gotools_syntax_errors"})
+
+    return rc
+
+  def run_golint(self):
+    command = "golint"
+    args = [self.view.file_name()]
+
+    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60)
+
+    # Clear previous syntax error marks
+    self.view.erase_regions("mark")
+
+    if rc != 0:
+      # Ermmm...
+      Logger.log("unknown golint error (" + str(rc) + ") stderr:\n" + stderr)
+      return
+
+    if stdout != "":
+      # Show syntax errors and bail
+      self.show_syntax_errors(stdout)
+    else:
+      # Everything's good, hide the syntax error panel
+      self.view.window().run_command("hide_panel", {"panel": "output.gotools_syntax_errors"})
+
+  def restore_viewport(self):
+    self.view.set_viewport_position(self.prev_viewport_pos, False)
+
+  # Display an output panel containing the syntax errors, and set gutter marks for each error.
+  def show_syntax_errors(self, stderr):
+    output_view = self.view.window().create_output_panel('gotools_syntax_errors')
+    output_view.set_scratch(True)
+    output_view.settings().set("result_file_regex","^(.*):(\d+):(\d+):(.*)$")
+    output_view.run_command("select_all")
+    output_view.run_command("right_delete")
+
+    syntax_output = stderr.replace("<standard input>", self.view.file_name())
+    output_view.run_command('append', {'characters': syntax_output})
+    self.view.window().run_command("show_panel", {"panel": "output.gotools_syntax_errors"})
+
+    marks = []
+    for error in stderr.splitlines():
+      match = re.match("(.*):(\d+):(\d+):", error)
+      if not match or not match.group(2):
+        Logger.log("skipping unrecognizable error:\n" + error + "\nmatch:" + str(match))
+        continue
+
+      row = int(match.group(2))
+      pt = self.view.text_point(row-1, 0)
+      Logger.log("adding mark at row " + str(row))
+      marks.append(sublime.Region(pt))
+
+    if len(marks) > 0:
+      self.view.add_regions("mark", marks, "mark", "dot", sublime.DRAW_STIPPLED_UNDERLINE | sublime.PERSISTENT)

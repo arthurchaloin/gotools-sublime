@@ -28,25 +28,17 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
     else:
       filename, row, col, offset, offset_end = Buffers.location_at_cursor(self.view)
 
-    backend = GoToolsSettings.get().goto_def_backend if GoToolsSettings.get().goto_def_backend else ""
     try:
-      if backend == "oracle":
-        file, row, col = self.get_oracle_location(filename, offset)
-      elif backend == "godef":
-        file, row, col = self.get_godef_location(filename, offset)
-      else:
-        Logger.log("Invalid godef backend '" + backend + "' (supported: godef, oracle)")
-        Logger.status("Invalid godef configuration; see console log for details")
-        return
+      file, row, col = self.get_oracle_location(filename, offset)
     except Exception as e:
      Logger.status(str(e))
      return
-    
+
     if not os.path.isfile(file):
       Logger.log("WARN: file indicated by godef not found: " + file)
       Logger.status("godef failed: Please enable debugging and check console log")
       return
-    
+
     Logger.log("opening definition at " + file + ":" + str(row) + ":" + str(col))
     w = self.view.window()
     new_view = w.open_file(file + ':' + str(row) + ':' + str(col), sublime.ENCODED_POSITION)
@@ -60,16 +52,16 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
     # Build up a package scope contaning all packages the user might have
     # configured.
     # TODO: put into a utility
-    package_scope = []
-    for p in GoToolsSettings.get().build_packages:
-      package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
-    for p in GoToolsSettings.get().test_packages:
-      package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
-    for p in GoToolsSettings.get().tagged_test_packages:
-      package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
+    # package_scope = []
+    # for p in GoToolsSettings.get().build_packages:
+    #   package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
+    # for p in GoToolsSettings.get().test_packages:
+    #   package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
+    # for p in GoToolsSettings.get().tagged_test_packages:
+    #   package_scope.append(os.path.join(GoToolsSettings.get().project_package, p))
 
-    if len(package_scope) > 0:
-      args = args + package_scope
+    # if len(package_scope) > 0:
+    #   args = args + package_scope
 
     location, err, rc = ToolRunner.run("oracle", args)
     if rc != 0:
@@ -79,26 +71,6 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
 
     # cut anything prior to the first path separator
     location = json.loads(location.rstrip())['definition']['objpos'].rsplit(":", 2)
-
-    if len(location) != 3:
-      raise Exception("no definition found")
-
-    file = location[0]
-    row = int(location[1])
-    col = int(location[2])
-
-    return [file, row, col]
-
-  def get_godef_location(self, filename, offset):
-    location, err, rc = ToolRunner.run("godef", ["-f", filename, "-o", str(offset)])
-    if rc != 0:
-      raise Exception("no definition found")
-
-    Logger.log("godef output:\n" + location.rstrip())
-
-    # godef is sometimes returning this junk as part of the output,
-    # so just cut anything prior to the first path separator
-    location = location.rstrip().rsplit(":", 2)
 
     if len(location) != 3:
       raise Exception("no definition found")

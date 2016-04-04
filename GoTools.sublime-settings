@@ -13,8 +13,12 @@
   // The 'both' option will first run 'goimports' then 'gofmt'
   "format_backend": "gofmt",
 
-  // A go-to-definition backend (must be either 'oracle' or 'godef').
-  "goto_def_backend": "godef",
+  // Lint source files each time they're saved.
+  "lint_on_save": true,
+
+  // A lintting backend (must be either 'govet' or 'golint' or 'both').
+  // The 'both' option will first run 'go vet' then 'golint'
+  "lint_backend": "golint",
 
   // Enable gocode autocompletion.
   "autocomplete": true,
