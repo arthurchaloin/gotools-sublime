@@ -1,28 +1,34 @@
-### This project is forked from GoTools(by ironcladlou) ###
+# GoTools with EXtension
 
-Since ironcladlou has decided to abandon GoTools project, I extract the features from GoTools and use together with Golang Build (by wbond: github.com/golang/sublime-build):
+It's a fork version of [GoTools](https://github.com/ironcladlou/GoTools) by ironcladlou. I create this project because ironcladlou has decided to abandon GoTools project, and I want to use this plugin together with [Golang Build](https://github.com/golang/sublime-build) (by wbond) ([discuss-1](
+https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.com/ironcladlou/GoTools/issues/128)).
+
+### Features inherited from GoTools:
 - auto-complete: with gocode
 - auto-format: with gofmt or goimports
 - goto definition: with oracle
 - rename: with gorename
 
-Removed features:
+### Features removed from GoTools:
 - Go syntax highlight: replaced by sublime's native support
 - Go build & test system: replaced by "Golang Build" (search in package-control)
 - godef support: only use oracle for "Go to definition"
 - Settings are simplified for easier usage
 
-Added features:
+### Features added:
 - auto-lint: with golint or govet
 
-Refer to these discussions:
-https://github.com/ironcladlou/GoTools/issues/121
-https://github.com/ironcladlou/GoTools/issues/128
-
 ### Usage
-- Step 1: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
-- Step 2: Install "GoTools EX" from package control.
-- Step 3(optional): Config the Settings for GoTools and your project. You can refer to the `GoTools.sublime-settings` and `ExampleProject.sublime-project` under this repository. If you want to use the full features of oracle tool, the configuration of your project is necessary.
+- **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
+    ```
+    go get github.com/nsf/gocode
+    go get github.com/golang/lint/golint
+    go get golang.org/x/tools/cmd/oracle
+    go get golang.org/x/tools/cmd/goimports
+    go get golang.org/x/tools/cmd/gorename
+    ```
+- **Step 2**: Install "GoTools EX" from package control.
+- **Step 3**(optional): Config the Settings for GoTools and your project. You can refer to the `GoTools.sublime-settings` and `ExampleProject.sublime-project` under this repository. If you want to use the full features of oracle tool, the configuration of your project is necessary.
 
 # GoTools
 

@@ -34,19 +34,19 @@ class GotoolsLint(sublime_plugin.TextCommand):
 
   def run_govet(self):
     command = "go"
-    args = ["vet", "-x"]
+    args = ["vet"]
 
     for p in GoToolsSettings.get().build_packages:
       args.append(os.path.join(GoToolsSettings.get().project_package, p))
 
-    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60)
+    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60, cwd=os.path.dirname(self.view.file_name()))
 
     # Clear previous syntax error marks
     self.view.erase_regions("mark")
 
     if rc == 1:
       # Show syntax errors and bail
-      self.show_syntax_errors(stderr)
+      self.show_syntax_errors(stderr, "^(.*?):(\d+):*(\d*):(.*)$")
     elif rc != 0:
       # Ermmm...
       Logger.log("unknown govet error (" + str(rc) + ") stderr:\n" + stderr)
@@ -72,37 +72,35 @@ class GotoolsLint(sublime_plugin.TextCommand):
 
     if stdout != "":
       # Show syntax errors and bail
-      self.show_syntax_errors(stdout)
+      self.show_syntax_errors(stdout, "^(.*):(\d+):(\d+):(.*)$")
     else:
       # Everything's good, hide the syntax error panel
       self.view.window().run_command("hide_panel", {"panel": "output.gotools_syntax_errors"})
 
-  def restore_viewport(self):
-    self.view.set_viewport_position(self.prev_viewport_pos, False)
-
   # Display an output panel containing the syntax errors, and set gutter marks for each error.
-  def show_syntax_errors(self, stderr):
+  def show_syntax_errors(self, stderr, file_regex,):
     output_view = self.view.window().create_output_panel('gotools_syntax_errors')
     output_view.set_scratch(True)
-    output_view.settings().set("result_file_regex","^(.*):(\d+):(\d+):(.*)$")
+    output_view.settings().set("result_file_regex", file_regex)
     output_view.run_command("select_all")
     output_view.run_command("right_delete")
 
-    syntax_output = stderr.replace("<standard input>", self.view.file_name())
-    output_view.run_command('append', {'characters': syntax_output})
-    self.view.window().run_command("show_panel", {"panel": "output.gotools_syntax_errors"})
-
     marks = []
     for error in stderr.splitlines():
-      match = re.match("(.*):(\d+):(\d+):", error)
+      match = re.match(file_regex, error)
       if not match or not match.group(2):
         Logger.log("skipping unrecognizable error:\n" + error + "\nmatch:" + str(match))
         continue
+
+      syntax_output = error.replace(match.group(1), self.view.file_name())
+      output_view.run_command('append', {'characters': syntax_output})
 
       row = int(match.group(2))
       pt = self.view.text_point(row-1, 0)
       Logger.log("adding mark at row " + str(row))
       marks.append(sublime.Region(pt))
+
+    self.view.window().run_command("show_panel", {"panel": "output.gotools_syntax_errors"})
 
     if len(marks) > 0:
       self.view.add_regions("mark", marks, "mark", "dot", sublime.DRAW_STIPPLED_UNDERLINE | sublime.PERSISTENT)
