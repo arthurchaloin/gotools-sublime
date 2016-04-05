@@ -89,7 +89,7 @@ class GotoolsLint(sublime_plugin.TextCommand):
     for error in stderr.splitlines():
       match = re.match(file_regex, error)
       if not match or not match.group(2):
-        Logger.log("skipping unrecognizable error:\n" + error + "\nmatch:" + str(match))
+        Logger.log("skipping unrecognizable error: " + error)
         continue
 
       syntax_output = error.replace(match.group(1), self.view.file_name())
