@@ -4,12 +4,16 @@
     "caption": "GoTools: Go to definition"
   },
   {
+    "command": "gotools_doc",
+    "caption": "GoTools: Doc"
+  },
+  {
     "command": "gotools_rename",
     "caption": "GoTools: Rename"
   },
   {
-  	"caption": "GoTools: Oracle: Callers",
     "command": "gotools_oracle",
+    "caption": "GoTools: Oracle: Callers",
     "args": {
       "command": "callers"
     }

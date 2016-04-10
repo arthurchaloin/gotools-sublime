@@ -12,6 +12,10 @@
     "command": "gotools_lint"
   },
   {
+    "caption": "GoTools: Doc",
+    "command": "gotools_doc"
+  },
+  {
     "caption": "GoTools: Rename",
     "command": "gotools_rename"
   },
