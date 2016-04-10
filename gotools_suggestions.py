@@ -22,21 +22,22 @@ class GotoolsSuggestions(sublime_plugin.EventListener):
     if not GoToolsSettings.get().autocomplete: return
 
     # set the lib-path for gocode's lookups
-    _, _, rc = ToolRunner.run("gocode", ["set", "lib-path", GoToolsSettings.get().golibpath])
+    # _, _, rc = ToolRunner.run("gocode", ["set", "lib-path", GoToolsSettings.get().golibpath])
 
-    suggestionsJsonStr, stderr, rc = ToolRunner.run("gocode", ["-f=json", "autocomplete", 
-      str(Buffers.offset_at_cursor(view)[0])], stdin=Buffers.buffer_text(view))
+    suggestionsJsonStr, stderr, rc = ToolRunner.run("gocode", ["-f=json", "autocomplete", str(locations[0])], stdin=Buffers.buffer_text(view))
 
     # TODO: restore gocode's lib-path
 
     suggestionsJson = json.loads(suggestionsJsonStr)
 
     Logger.log("DEBUG: gocode output: " + suggestionsJsonStr)
+    # Logger.log("DEBUG: prefix: " + prefix)
+    # Logger.log("DEBUG: locations: " + str(locations))
 
     if rc != 0:
       Logger.status("no completions found: " + str(e))
       return []
-    
+
     if len(suggestionsJson) > 0:
       return ([GotoolsSuggestions.build_suggestion(j) for j in suggestionsJson[1]], sublime.INHIBIT_WORD_COMPLETIONS)
     else:
