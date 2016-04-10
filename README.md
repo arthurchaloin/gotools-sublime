@@ -17,6 +17,7 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 
 ### Features added:
 - auto-lint: with golint or govet
+- doc tips: with godoc
 
 ### Usage
 - **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
