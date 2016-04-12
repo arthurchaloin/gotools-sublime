@@ -36,9 +36,6 @@ class GotoolsLint(sublime_plugin.TextCommand):
     command = "go"
     args = ["vet"]
 
-    for p in GoToolsSettings.get().build_packages:
-      args.append(os.path.join(GoToolsSettings.get().project_package, p))
-
     stdout, stderr, rc = ToolRunner.run(command, args, timeout=60, cwd=os.path.dirname(self.view.file_name()))
 
     # Clear previous syntax error marks

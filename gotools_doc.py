@@ -6,7 +6,6 @@ from .gotools_util import Buffers
 from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
-from .gotools_settings import GoToolsSettings
 
 class GotoolsDocCommand(sublime_plugin.TextCommand):
   def is_enabled(self):

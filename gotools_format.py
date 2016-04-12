@@ -8,6 +8,10 @@ from .gotools_util import Logger
 from .gotools_util import ToolRunner
 from .gotools_settings import GoToolsSettings
 
+def plugin_loaded():
+  # generate the singleton
+  GoToolsSettings.get()
+
 class GotoolsFormatOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
     if not GoBuffers.is_go_source(view): return

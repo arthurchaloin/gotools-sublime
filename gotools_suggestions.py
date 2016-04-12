@@ -24,7 +24,7 @@ class GotoolsSuggestions(sublime_plugin.EventListener):
     # set the lib-path for gocode's lookups
     # _, _, rc = ToolRunner.run("gocode", ["set", "lib-path", GoToolsSettings.get().golibpath])
 
-    suggestionsJsonStr, stderr, rc = ToolRunner.run("gocode", ["-f=json", "autocomplete", str(locations[0])], stdin=Buffers.buffer_text(view))
+    suggestionsJsonStr, stderr, rc = ToolRunner.run("gocode", ["-f=json", "autocomplete", view.file_name(), str(locations[0])], stdin=Buffers.buffer_text(view))
 
     # TODO: restore gocode's lib-path
 
