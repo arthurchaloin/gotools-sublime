@@ -9,10 +9,6 @@ from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
 
-def plugin_loaded():
-  resource_path = os.path.join(sublime.packages_path(), "Golang Tools Integration", "CHANGELOG")
-  sublime.active_window().open_file(resource_path)
-
 class GotoolsFormatOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
     if not GoBuffers.is_go_source(view): return
