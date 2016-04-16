@@ -1,10 +1,20 @@
 {
-  "folders": [],
+  "folders": [
+    {
+      "path": "C:\\Users\\jsmith\\projects\\myproj"
+    }
+  ],
+
   "settings": {
-    "GoTools": {
-      // A custom GOPATH for this project; ${gopath} is expanded by the global
-      // settings value.
-      "gopath": "${gopath}/src/github.com/some/project/Godeps/_workspace:${gopath}",
+    "golang": {
+
+      // A list of GOPATH for this project
+      // refer to github.com/golang/sublime-config
+      "GOPATH": "C:\\Users\\jsmith\\go",
+
+      // A list of PATH for this project
+      // refer to github.com/golang/sublime-config
+      "PATH": "C:\\Users\\jsmith\\go\\bin",
 
       // The root package (or namespace) of a project.
       "project_package": "github.com/some/project",

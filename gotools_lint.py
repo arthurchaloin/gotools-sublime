@@ -2,17 +2,17 @@ import sublime
 import sublime_plugin
 import re
 import os
+import golangconfig
 
 from .gotools_util import Buffers
 from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
-from .gotools_settings import GoToolsSettings
 
 class GotoolsLintOnSave(sublime_plugin.EventListener):
   def on_post_save(self, view):
     if not GoBuffers.is_go_source(view): return
-    if not GoToolsSettings.get().lint_on_save: return
+    if not golangconfig.setting_value("lint_on_save")[0]: return
     view.run_command('gotools_lint')
 
 class GotoolsLint(sublime_plugin.TextCommand):
@@ -20,11 +20,11 @@ class GotoolsLint(sublime_plugin.TextCommand):
     return GoBuffers.is_go_source(self.view)
 
   def run(self, edit):
-    if GoToolsSettings.get().lint_backend == "golint":
+    if golangconfig.setting_value("lint_backend")[0] == "golint":
       self.run_golint()
-    elif GoToolsSettings.get().lint_backend == "govet":
+    elif golangconfig.setting_value("lint_backend")[0] == "govet":
       self.run_govet()
-    elif GoToolsSettings.get().lint_backend == "both":
+    elif golangconfig.setting_value("lint_backend")[0] == "both":
       rc = self.run_govet()
       if rc != 1:
         self.run_golint()
@@ -36,7 +36,7 @@ class GotoolsLint(sublime_plugin.TextCommand):
     command = "go"
     args = ["vet"]
 
-    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60, cwd=os.path.dirname(self.view.file_name()))
+    stdout, stderr, rc = ToolRunner.run(self.view, command, args, timeout=60, cwd=os.path.dirname(self.view.file_name()))
 
     # Clear previous syntax error marks
     self.view.erase_regions("mark")
@@ -57,7 +57,7 @@ class GotoolsLint(sublime_plugin.TextCommand):
     command = "golint"
     args = [self.view.file_name()]
 
-    stdout, stderr, rc = ToolRunner.run(command, args, timeout=60)
+    stdout, stderr, rc = ToolRunner.run(self.view, command, args, timeout=60)
 
     # Clear previous syntax error marks
     self.view.erase_regions("mark")

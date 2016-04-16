@@ -4,8 +4,7 @@ import re
 import platform
 import subprocess
 import time
-
-from .gotools_settings import GoToolsSettings
+import golangconfig
 
 class Buffers():
   @staticmethod
@@ -65,7 +64,7 @@ class GoBuffers():
 class Logger():
   @staticmethod
   def log(msg):
-    if GoToolsSettings.get().debug_enabled:
+    if golangconfig.setting_value('debug_enabled')[0]:
       print("GoTools: DEBUG: {0}".format(msg))
 
   @staticmethod
@@ -78,38 +77,14 @@ class Logger():
 
 class ToolRunner():
   @staticmethod
-  def run(tool, args=[], stdin=None, timeout=5, cwd=None):
-    toolpath = None
-    searchpaths = list(map(lambda x: os.path.join(x, 'bin'), GoToolsSettings.get().gopath.split(os.pathsep)))
-    for p in GoToolsSettings.get().ospath.split(os.pathsep):
-      searchpaths.append(p)
-    searchpaths.append(os.path.join(GoToolsSettings.get().goroot, 'bin'))
-    searchpaths.append(GoToolsSettings.get().gorootbin)
+  def run(view, tool, args=[], stdin=None, timeout=5, cwd=None):
 
-    if platform.system() == "Windows":
-      tool = tool + ".exe"
-
-    for path in searchpaths:
-      candidate = os.path.join(path, tool)
-      if os.path.isfile(candidate):
-        toolpath = candidate
-        break
-
-    if not toolpath:
-      Logger.log("Couldn't find Go tool '{0}' in:\n{1}".format(tool, "\n".join(searchpaths)))
-      raise Exception("Error running Go tool '{0}'; check the console logs for details".format(tool))
-
+    toolpath, env = golangconfig.subprocess_info(tool, ['GOPATH', 'PATH'], view=view)
     cmd = [toolpath] + args
     try:
       Logger.log("spawning process...")
-
-      env = os.environ.copy()
-      env["PATH"] = GoToolsSettings.get().ospath
-      env["GOPATH"] = GoToolsSettings.get().gopath
-      env["GOROOT"] = GoToolsSettings.get().goroot
-
       Logger.log("\tcommand:     " + " ".join(cmd))
-      # Logger.log("\tenvironment: " + str(env))
+      Logger.log("\tenvironment: " + str(env))
 
       # Hide popups on Windows
       si = None

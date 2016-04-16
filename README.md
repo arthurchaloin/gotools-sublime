@@ -4,10 +4,10 @@ It's a fork version of [GoTools](https://github.com/ironcladlou/GoTools) by iron
 https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.com/ironcladlou/GoTools/issues/128)).
 
 ### Features inherited from GoTools:
-- auto-complete: with gocode
-- auto-format: with gofmt or goimports
-- goto definition: with oracle
-- rename: with gorename
+- Auto-Completion: with gocode
+- Auto-Format: with gofmt or goimports
+- Go-to Definition: with oracle
+- Rename: with gorename
 
 ### Features removed from GoTools:
 - Go syntax highlight: replaced by sublime's native support
@@ -16,8 +16,9 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 - Settings are simplified for easier usage
 
 ### Features added:
-- auto-lint: with golint or govet
-- doc tips over selected text or cursor: with godoc
+- Auto-Lint: with golint or govet
+- Doc tips over selected text or cursor: with godoc
+- Use [sublime-config](https://github.com/golang/sublime-config) for Settings
 
 ### Usage
 - **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
@@ -31,7 +32,7 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
     ```
     
 - **Step 2**: Search and install "Golang Tools Integration" from package control.
-- **Step 3**(optional): Configure the Settings for GoTools and your project following the `GoTools.sublime-settings` and `ExampleProject.sublime-project`. Typically, the full features of 'oracle' need use the configuration of the project.
+- **Step 3(optional)**: Configure the Settings for `golang` and your project following the `golang.sublime-settings` and `ExampleProject.sublime-project`. Typically, the full features of 'oracle' need use the configuration of the project.
 
 ------------------
 ** Introduction below comes from GoTools project **

@@ -6,17 +6,13 @@ from .gotools_util import Buffers
 from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
-from .gotools_settings import GoToolsSettings
 
 class GotoolsRenameCommand(sublime_plugin.TextCommand):
   def is_enabled(self):
     return GoBuffers.is_go_source(self.view)
 
   def run(self, edit):
-    self.view.window().show_input_panel("Go rename:", "", self.do_rename_async, None, None)
-
-  def do_rename_async(self, name):
-    sublime.set_timeout_async(lambda: self.do_rename(name), 0)
+    self.view.window().show_input_panel("Go rename:", "", self.do_rename, None, None)
 
   def do_rename(self, name):
     filename, _row, _col, offset, _offset_end = Buffers.location_at_cursor(self.view)
@@ -25,7 +21,7 @@ class GotoolsRenameCommand(sublime_plugin.TextCommand):
       "-to", name,
       "-v"
     ]
-    output, err, exit = ToolRunner.run("gorename", args, timeout=15)
+    output, err, exit = ToolRunner.run(self.view, "gorename", args, timeout=15)
 
     if exit != 0:
       Logger.status("rename failed ({0}): {1}".format(exit, err))

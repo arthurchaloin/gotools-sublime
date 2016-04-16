@@ -20,7 +20,7 @@ class GotoolsDocCommand(sublime_plugin.TextCommand):
     else:
       args.append(self.view.substr(self.view.word(self.view.sel()[0].begin())))
 
-    stdout, stderr, rc = ToolRunner.run(command, args)
+    stdout, stderr, rc = ToolRunner.run(self.view, command, args)
     output_view = self.view.window().create_output_panel('godoc-output')
 
     if rc == 0:

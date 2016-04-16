@@ -1,10 +1,4 @@
 {
-  // The GOPATH used for plugin operations. May be overridden and used as a
-  // substitution value in the gopath project setting. If left blank or
-  // undefined, the default will be the system GOPATH environment variable, or
-  // the GOPATH reported by `go env` if the system GOPATH environment variable
-  // is unset.
-  "gopath": "",
 
   // Format source files each time they're saved.
   "format_on_save": true,
@@ -27,8 +21,6 @@
   "debug_enabled": false,
 
   // Use tabs for Go source files by default.
-  "translate_tabs_to_spaces": false,
+  "translate_tabs_to_spaces": false
 
-  // Use GoTools for all Go source files.
-  "extensions": ["go"]
 }

@@ -2,12 +2,12 @@ import sublime
 import sublime_plugin
 import json
 import os
+import golangconfig
 
 from .gotools_util import Buffers
 from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
-from .gotools_settings import GoToolsSettings
 
 class GotoolsSuggestions(sublime_plugin.EventListener):
   CLASS_SYMBOLS = {
@@ -19,20 +19,13 @@ class GotoolsSuggestions(sublime_plugin.EventListener):
 
   def on_query_completions(self, view, prefix, locations):
     if not GoBuffers.is_go_source(view): return
-    if not GoToolsSettings.get().autocomplete: return
+    if not golangconfig.setting_value("autocomplete")[0]: return
 
-    # set the lib-path for gocode's lookups
-    # _, _, rc = ToolRunner.run("gocode", ["set", "lib-path", GoToolsSettings.get().golibpath])
-
-    suggestionsJsonStr, stderr, rc = ToolRunner.run("gocode", ["-f=json", "autocomplete", view.file_name(), str(locations[0])], stdin=Buffers.buffer_text(view))
-
-    # TODO: restore gocode's lib-path
+    suggestionsJsonStr, stderr, rc = ToolRunner.run(view, "gocode", ["-f=json", "autocomplete", view.file_name(), str(locations[0])], stdin=Buffers.buffer_text(view))
 
     suggestionsJson = json.loads(suggestionsJsonStr)
 
     Logger.log("DEBUG: gocode output: " + suggestionsJsonStr)
-    # Logger.log("DEBUG: prefix: " + prefix)
-    # Logger.log("DEBUG: locations: " + str(locations))
 
     if rc != 0:
       Logger.status("no completions found: " + str(e))
