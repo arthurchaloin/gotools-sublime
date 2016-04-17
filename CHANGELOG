@@ -1,13 +1,15 @@
-*** Golang Tools Integration **
+*** Golang Tools Integration ***
+
+2016/04/17	v1.0.4
++ Add messages.json for showing the CHANGELOG autmatically
++ Add the "GOPATH/PATH" setting notice into README
 
 2016/04/16	v1.0.3
 + Use golangconfig to replace the gotools_settings
++ Improve the performance, especially for auto-completion
 - Remove the Gotools's Package-Settings menu item: replaced by the unified Golang settings
 !!! Users must migrate the global and project-specific settings
 	Please refer to the README and "ExamplePorject.sublime-project", "golang.sublime-settings"
-
-2016/04/13	v1.0.2.1
-+ Fix govet
 
 2016/04/10	v1.0.2
 + Godoc support
