@@ -21,7 +21,7 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 - Use [sublime-config](https://github.com/golang/sublime-config) for Settings
 
 ### Usage
-- **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint.
+- **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint, and make sure the `$GOPATH/bin` is added into `$PATH` (Or you can set them in Golang's global "Settings - User" later).
 
     ```
     go get github.com/nsf/gocode
