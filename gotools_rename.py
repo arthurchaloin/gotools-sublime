@@ -24,6 +24,8 @@ class GotoolsRenameCommand(sublime_plugin.TextCommand):
     output, err, exit = ToolRunner.run(self.view, "gorename", args, timeout=15)
 
     if exit != 0:
+      print("GoTools: gorename error:")
+      print(err)
       Logger.status("rename failed ({0}): {1}".format(exit, err))
       return
     Logger.status("renamed symbol to {name}".format(name=name))
