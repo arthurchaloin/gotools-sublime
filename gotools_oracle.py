@@ -43,8 +43,7 @@ class GotoolsOracleCommand(sublime_plugin.TextCommand):
     Logger.log("oracle "+mode+" output: " + output.rstrip())
 
     if rc != 0:
-      print("GoTools: oracle error:")
-      print(err)
+      print("GoTools: Oracle error:\n%s" % err)
       Logger.status("oracle call failed (" + str(rc) +")")
       return
     Logger.status("oracle "+mode+" finished")
