@@ -34,7 +34,27 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 - **Step 2**: Search and install "Golang Tools Integration" from package control.
 - **Step 3(optional)**: Configure the Settings for `golang` and your project following the `golang.sublime-settings` and `ExampleProject.sublime-project`. Typically, the full features of 'oracle' need use the configuration of the project.
 
+### Tips
+- If you want to trigger auto-completion after ".", you can add below into Settings - Syntax specific - User (a.k.a. User/Go.sublime-settings):
+
+    ```json
+    {
+        // Additional situations to trigger auto complete
+        "auto_complete_triggers": [{"selector": "source.go - string - comment - constant.numeric", "characters": "."}]
+    }
+    ```
+
+- If you want to ignore auto-completion when in comments, constant strings, and numbers, you can add below into Settings - Syntax specific - User (a.k.a. User/Go.sublime-settings):
+
+    ```json
+    {
+        // Controls what scopes auto complete will be triggered in
+        "auto_complete_selector": "meta.tag - punctuation.definition.tag.begin, source - comment - string - constant.numeric"
+    }
+    ```
+
 ------------------
+
 ** Introduction below comes from GoTools project **
 
 # GoTools
