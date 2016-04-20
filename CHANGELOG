@@ -1,5 +1,9 @@
 *** Golang Tools Integration ***
 
+2016/04/20	v1.0.5
++ Add error messages for oracle and gorename
++ Add Tips for auto-completion configuration to README
+
 2016/04/17	v1.0.4
 + Add messages.json for showing the CHANGELOG autmatically
 + Add the "GOPATH/PATH" setting notice into README
