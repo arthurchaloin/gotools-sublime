@@ -27,7 +27,7 @@ class GotoolsFormat(sublime_plugin.TextCommand):
       args = ["-e", "-s"]
     elif golangconfig.setting_value("format_backend")[0] in ["goimports", "both"] :
       command = "goimports"
-      args = ["-e"]
+      args = ["-e", "-srcdir=%s" % os.path.dirname(self.view.file_name())]
 
     stdout, stderr, rc = ToolRunner.run(self.view, command, args, stdin=Buffers.buffer_text(self.view))
 
