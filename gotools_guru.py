@@ -8,7 +8,7 @@ from .gotools_util import GoBuffers
 from .gotools_util import Logger
 from .gotools_util import ToolRunner
 
-class GotoolsOracleCommand(sublime_plugin.TextCommand):
+class GotoolsGuruCommand(sublime_plugin.TextCommand):
   def is_enabled(self):
     return GoBuffers.is_go_source(self.view)
 
@@ -31,27 +31,29 @@ class GotoolsOracleCommand(sublime_plugin.TextCommand):
       for p in golangconfig.setting_value("build_packages", view=self.view)[0]:
         package_scope.append(os.path.join(project_package, p))
 
-    sublime.active_window().run_command("hide_panel", {"panel": "output.gotools_oracle"})
-    self.do_plain_oracle(command, pos, package_scope)
+    sublime.active_window().run_command("hide_panel", {"panel": "output.gotools_guru"})
+    self.do_plain_guru(command, pos, package_scope)
 
-  def do_plain_oracle(self, mode, pos, package_scope=[], regex="^(.*):(\d+):(\d+):(.*)$"):
-    Logger.status("running oracle "+mode+"...")
-    args = ["-pos="+pos, "-format=plain", mode]
+  def do_plain_guru(self, mode, pos, package_scope=[], regex="^(.*):(\d+):(\d+):(.*)$"):
+    Logger.status("running guru "+mode+"...")
+    args = []
     if len(package_scope) > 0:
-      args = args + package_scope
-    output, err, rc = ToolRunner.run(self.view, "oracle", args, timeout=60)
-    Logger.log("oracle "+mode+" output: " + output.rstrip())
+      args = ["-scope", ",".join(package_scope)]
+
+    args = args + [mode, pos]
+    output, err, rc = ToolRunner.run(self.view, "guru", args, timeout=60)
+    Logger.log("guru "+mode+" output: " + output.rstrip())
 
     if rc != 0:
-      print("GoTools: Oracle error:\n%s" % err)
-      Logger.status("oracle call failed (" + str(rc) +")")
+      print("GoTools: Guru error:\n%s" % err)
+      Logger.status("guru call failed (" + str(rc) +")")
       return
-    Logger.status("oracle "+mode+" finished")
+    Logger.status("guru "+mode+" finished")
 
-    panel = self.view.window().create_output_panel('gotools_oracle')
+    panel = self.view.window().create_output_panel('gotools_guru')
     panel.set_scratch(True)
     panel.settings().set("result_file_regex", regex)
     panel.run_command("select_all")
     panel.run_command("right_delete")
     panel.run_command('append', {'characters': output})
-    self.view.window().run_command("show_panel", {"panel": "output.gotools_oracle"})
+    self.view.window().run_command("show_panel", {"panel": "output.gotools_guru"})
