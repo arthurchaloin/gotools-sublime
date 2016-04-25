@@ -6,14 +6,13 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 ### Features inherited from GoTools:
 - Auto-Completion: with gocode
 - Auto-Format: with gofmt or goimports
-- Go-to Definition: with guru
+- Go-to Definition: with guru or godef
 - Rename: with gorename
 
 ### Features removed(replaced) from GoTools:
 - Go syntax highlight: replaced by sublime's native support
 - Go build & test system: replaced by "[Golang Build](https://github.com/golang/sublime-build)" (search in package-control)
 - GoTools Settings: replaced by "[golangconfig](https://github.com/golang/sublime-config)"
-- godef support: only use guru for "Go to definition"
 
 ### Features added:
 - Auto-Lint: with golint or govet
