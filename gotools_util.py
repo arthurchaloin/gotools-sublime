@@ -6,6 +6,18 @@ import subprocess
 import time
 import golangconfig
 
+def plugin_loaded():
+  # check if the dependent gotools have been installed
+  tools = ["guru", "golint", "gocode", "gorename", "goimports"]
+
+  missed_tools = ""
+  for t in tools:
+    if golangconfig.executable_path(t)[0] == None:
+      missed_tools += '"%s" ' % t
+
+  if missed_tools != "":
+    print("\nGoTools Warning: %scan't be found in executable path.\nPlease \"go get\" them (Refer to README.md).\n" % missed_tools)
+
 class Buffers():
   @staticmethod
   def offset_at_row_col(view, row, col):
@@ -84,7 +96,7 @@ class ToolRunner():
     try:
       Logger.log("spawning process...")
       Logger.log("\tcommand:     " + " ".join(cmd))
-      Logger.log("\tenvironment: " + str(env))
+      # Logger.log("\tenvironment: " + str(env))
 
       # Hide popups on Windows
       si = None

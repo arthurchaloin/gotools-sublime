@@ -20,57 +20,57 @@
     "command": "gotools_rename"
   },
   {
-    "caption": "GoTools: Oracle: Callers",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Callers",
+    "command": "gotools_guru",
     "args": {
       "command": "callers"
     }
   },
   {
-    "caption": "GoTools: Oracle: Callees",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Callees",
+    "command": "gotools_guru",
     "args": {
       "command": "callees"
     }
   },
   {
-    "caption": "GoTools: Oracle: Callstack",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Callstack",
+    "command": "gotools_guru",
     "args": {
       "command": "callstack"
     }
   },
   {
-    "caption": "GoTools: Oracle: Describe",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Describe",
+    "command": "gotools_guru",
     "args": {
       "command": "describe"
     }
   },
   {
-    "caption": "GoTools: Oracle: Freevars",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Freevars",
+    "command": "gotools_guru",
     "args": {
       "command": "freevars"
     }
   },
   {
-    "caption": "GoTools: Oracle: Implements",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Implements",
+    "command": "gotools_guru",
     "args": {
       "command": "implements"
     }
   },
   {
-    "caption": "GoTools: Oracle: Peers",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Peers",
+    "command": "gotools_guru",
     "args": {
       "command": "peers"
     }
   },
   {
-    "caption": "GoTools: Oracle: Referrers",
-    "command": "gotools_oracle",
+    "caption": "GoTools: Guru: Referrers",
+    "command": "gotools_guru",
     "args": {
       "command": "referrers"
     }

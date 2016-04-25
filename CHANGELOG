@@ -1,5 +1,11 @@
 *** Golang Tools Integration ***
 
+2016/04/25	v1.0.6
++ Add "-srcdir" arguments for goimports -- Thanks @ottob
++ Replce "oracle" with "guru" since oracle is deprecated -- Thanks @ottob
++ Add the check for the installation of dependent go tools(goimports, guru, gorename...)
+!!! Users must install guru through "go get golang.org/x/tools/cmd/guru"
+
 2016/04/20	v1.0.5
 + Add error messages for oracle and gorename
 + Add Tips for auto-completion configuration to README
