@@ -12,8 +12,8 @@
     "caption": "GoTools: Rename"
   },
   {
-    "command": "gotools_oracle",
-    "caption": "GoTools: Oracle: Callers",
+    "command": "gotools_guru",
+    "caption": "GoTools: Guru: Callers",
     "args": {
       "command": "callers"
     }

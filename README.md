@@ -6,7 +6,7 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 ### Features inherited from GoTools:
 - Auto-Completion: with gocode
 - Auto-Format: with gofmt or goimports
-- Go-to Definition: with oracle
+- Go-to Definition: with guru
 - Rename: with gorename
 
 ### Features removed from GoTools:
@@ -21,18 +21,18 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 - Use [sublime-config](https://github.com/golang/sublime-config) for Settings
 
 ### Usage
-- **Step 1**: Install golang and go tools by yourself: gocode, goimports, oracle, gorename, golint, and make sure the `$GOPATH/bin` is added into `$PATH` (Or you can set them in Golang's global "Settings - User" later).
+- **Step 1**: Install golang and go tools by yourself: gocode, goimports, guru, gorename, golint, and make sure the `$GOPATH/bin` is added into `$PATH` (Or you can set them in Golang's global "Settings - User" later).
 
     ```
     go get github.com/nsf/gocode
     go get github.com/golang/lint/golint
-    go get golang.org/x/tools/cmd/oracle
+    go get golang.org/x/tools/cmd/guru
     go get golang.org/x/tools/cmd/goimports
     go get golang.org/x/tools/cmd/gorename
     ```
     
 - **Step 2**: Search and install "Golang Tools Integration" from package control.
-- **Step 3(optional)**: Configure the Settings for `golang` and your project following the `golang.sublime-settings` and `ExampleProject.sublime-project`. Typically, the full features of 'oracle' need use the configuration of the project.
+- **Step 3(optional)**: Configure the Settings for `golang` and your project following the `golang.sublime-settings` and `ExampleProject.sublime-project`. Typically, the full features of 'guru' need use the configuration of the project.
 
 ### Tips
 - If you want to trigger auto-completion after ".", you can add below into Settings - Syntax specific - User (a.k.a. User/Go.sublime-settings):

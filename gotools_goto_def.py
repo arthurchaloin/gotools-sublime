@@ -20,14 +20,14 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
     filename, row, col, offset, offset_end = Buffers.location_at_cursor(self.view)
 
     try:
-      file, row, col = self.get_oracle_location(filename, offset)
+      file, row, col = self.get_guru_location(filename, offset)
     except Exception as e:
       Logger.status(str(e))
       return
 
     if not os.path.isfile(file):
-      Logger.log("WARN: file indicated by godef not found: " + file)
-      Logger.status("godef failed: Please enable debugging and check console log")
+      Logger.log("WARN: file indicated by guru not found: " + file)
+      Logger.status("guru failed: Please enable debugging and check console log")
       return
 
     Logger.log("opening definition at " + file + ":" + str(row) + ":" + str(col))
@@ -37,17 +37,17 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
     if group != -1:
       w.focus_group(group)
 
-  def get_oracle_location(self, filename, offset):
-    args = ["-pos="+filename+":#"+str(offset), "-format=json", "definition"]
+  def get_guru_location(self, filename, offset):
+    args = ["-json", "definition", filename+":#"+str(offset)]
 
-    location, err, rc = ToolRunner.run(self.view, "oracle", args)
+    location, err, rc = ToolRunner.run(self.view, "guru", args)
     if rc != 0:
       raise Exception("no definition found")
 
-    Logger.log("oracle output:\n" + location.rstrip())
+    Logger.log("guru output:\n" + location.rstrip())
 
     # cut anything prior to the first path separator
-    location = json.loads(location.rstrip())['definition']['objpos'].rsplit(":", 2)
+    location = json.loads(location.rstrip())['objpos'].rsplit(":", 2)
 
     if len(location) != 3:
       raise Exception("no definition found")
