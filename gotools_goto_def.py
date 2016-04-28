@@ -2,7 +2,6 @@ import sublime
 import sublime_plugin
 import os
 import json
-import golangconfig
 
 from .gotools_util import Buffers
 from .gotools_util import GoBuffers
@@ -21,10 +20,7 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
     filename, row, col, offset, offset_end = Buffers.location_at_cursor(self.view)
 
     try:
-      if golangconfig.setting_value("goto_def_backend")[0] == "godef":
-        file, row, col = self.get_godef_location(filename, offset)
-      else:
-        file, row, col = self.get_guru_location(filename, offset)
+      file, row, col = self.get_guru_location(filename, offset)
     except Exception as e:
       Logger.status(str(e))
       return
@@ -52,26 +48,6 @@ class GotoolsGotoDef(sublime_plugin.TextCommand):
 
     # cut anything prior to the first path separator
     location = json.loads(location.rstrip())['objpos'].rsplit(":", 2)
-
-    if len(location) != 3:
-      raise Exception("no definition found")
-
-    file = location[0]
-    row = int(location[1])
-    col = int(location[2])
-
-    return [file, row, col]
-
-  def get_godef_location(self, filename, offset):
-    location, err, rc = ToolRunner.run(self.view, "godef", ["-f", filename, "-o", str(offset)])
-    if rc != 0:
-      raise Exception("no definition found")
-
-    Logger.log("godef output:\n" + location.rstrip())
-
-    # godef is sometimes returning this junk as part of the output,
-    # so just cut anything prior to the first path separator
-    location = location.rstrip().rsplit(":", 2)
 
     if len(location) != 3:
       raise Exception("no definition found")

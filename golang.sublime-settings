@@ -7,9 +7,6 @@
   // The 'both' option will first run 'goimports' then 'gofmt'
   "format_backend": "gofmt",
 
-  // A go-to-definition backend (must be either 'guru' or 'godef').
-  "goto_def_backend": "guru",
-
   // Lint source files each time they're saved.
   "lint_on_save": true,
 
