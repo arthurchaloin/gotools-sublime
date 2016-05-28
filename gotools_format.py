@@ -37,6 +37,7 @@ class GotoolsFormat(sublime_plugin.TextCommand):
     if rc == 2:
       # Show syntax errors and bail
       self.show_syntax_errors(stderr)
+      Logger.err = True
       return
 
     if rc != 0:
@@ -55,6 +56,7 @@ class GotoolsFormat(sublime_plugin.TextCommand):
     if rc == 2:
       # Show syntax errors and bail
       self.show_syntax_errors(stderr)
+      Logger.err = True
       return
 
     if rc != 0:
@@ -74,6 +76,8 @@ class GotoolsFormat(sublime_plugin.TextCommand):
 
     # Restore the viewport on the main GUI thread (which is the only way this works).
     sublime.set_timeout(self.restore_viewport, 0)
+
+    Logger.err = False
 
   def restore_viewport(self):
     self.view.set_viewport_position(self.prev_viewport_pos, False)

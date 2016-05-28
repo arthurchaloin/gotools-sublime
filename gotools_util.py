@@ -74,6 +74,7 @@ class GoBuffers():
     return view.score_selector(0, 'source.go') != 0
 
 class Logger():
+  err = False
   @staticmethod
   def log(msg):
     if golangconfig.setting_value('debug_enabled')[0]:

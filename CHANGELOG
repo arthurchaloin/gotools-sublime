@@ -1,5 +1,8 @@
 *** Golang Tools Integration ***
 
+2016/05/28	v1.0.7
++ Fix an issue: #issue13
+
 2016/04/25	v1.0.6
 + Add "-srcdir" arguments for goimports -- Thanks @ottob
 + Replce "oracle" with "guru" since oracle is deprecated -- Thanks @ottob

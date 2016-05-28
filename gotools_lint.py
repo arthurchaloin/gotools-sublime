@@ -13,6 +13,7 @@ class GotoolsLintOnSave(sublime_plugin.EventListener):
   def on_post_save(self, view):
     if not GoBuffers.is_go_source(view): return
     if not golangconfig.setting_value("lint_on_save")[0]: return
+    if Logger.err: return
     view.run_command('gotools_lint')
 
 class GotoolsLint(sublime_plugin.TextCommand):
