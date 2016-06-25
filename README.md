@@ -62,22 +62,21 @@ GoTools is a [Go programming language](http://www.golang.org) plugin for [Sublim
 
 ## Features
 
-* Jump to symbol/declaration (using your choice of [oracle](https://godoc.org/golang.org/x/tools/oracle) or [godef](https://github.com/rogpeppe/godef))
+* Jump to symbol/declaration using [guru](https://godoc.org/golang.org/x/tools/cmd/guru)
 * Format and syntax check on save, including gutter marks (using [gofmt](https://golang.org/cmd/gofmt/))
 * Autocompletion (using [gocode](https://github.com/nsf/gocode))
 * Build and test integration
-* Source analysis (using [oracle](https://godoc.org/golang.org/x/tools/oracle))
+* Source analysis (using [guru](https://godoc.org/golang.org/x/tools/cmd/guru))
 * Identifier renaming (using [gorename](https://godoc.org/golang.org/x/tools/cmd/gorename))
 * Improved syntax support (borrowed from [GoSublime](https://github.com/DisposaBoy/GoSublime))
 
 ### Prerequisites
 
-GoTools will attempt to find all external Go tools (`oracle`, `gofmt`, `gocode`, etc.) using `GOPATH` and `GOROOT` (not `PATH`). If you don't have these binaries, use `go get` to install them:
+GoTools will attempt to find all external Go tools (`guru`, `gofmt`, `gocode`, etc.) using `GOPATH` and `GOROOT` (not `PATH`). If you don't have these binaries, use `go get` to install them:
 
     go get -u -v github.com/nsf/gocode
-    go get -u -v github.com/rogpeppe/godef
     go get -u -v golang.org/x/tools/cmd/goimports
-    go get -u -v golang.org/x/tools/cmd/oracle
+    go get -u -v golang.org/x/tools/cmd/guru
     go get -u -v golang.org/x/tools/cmd/gorename
 
 GoTools is only tested with Go 1.4. Note that `gofmt` is now included with the Go distribution, and any `gofmt` installed to `GOPATH` is likely from an old Go version and should probably be removed.
@@ -133,8 +132,6 @@ Here's an example `sublime-mousemap` entry which will go to a definition using `
 ```json
 {"button": "button1", "count": 1, "modifiers": ["ctrl"], "command": "gotools_goto_def"}
 ```
-
-By default [godef](https://github.com/rogpeppe/godef) is used for definition support. To change the backend, set `goto_def_backend` in your [GoTools settings](GoTools.sublime-settings).
 
 #### Autocomplete
 
@@ -214,15 +211,15 @@ Replace `variant` in the command with any variant name from the preceding table 
 
 #### Oracle Analysis (experimental)
 
-GoTools integrates Sublime Text with [oracle](https://godoc.org/golang.org/x/tools/oracle). Oracle is invoked with the `gotools_oracle` Sublime Text command.
+GoTools integrates Sublime Text with [guru](https://godoc.org/golang.org/x/tools/cmd/guru). Oracle is invoked with the `gotools_guru` Sublime Text command.
 
-Here's an example which runs the oracle "implements" command when `<ctrl+alt+i>` is pressed:
+Here's an example which runs the guru "implements" command when `<ctrl+alt+i>` is pressed:
 
 ```json
-{ "keys" : ["ctrl+alt+i"], "command" : "gotools_oracle" , "args" : {"command": "implements"}},
+{ "keys" : ["ctrl+alt+i"], "command" : "gotools_guru" , "args" : {"command": "implements"}},
 ```
 
-The following oracle operations are supported as arguments to the `gotools_oracle` command:
+The following guru operations are supported as arguments to the `gotools_guru` command:
 
 Command      | Notes
 -------------|------
@@ -238,7 +235,7 @@ referrers    |
 Oracle results are placed in a Sublime Text output panel which can be toggled with a command such as:
 
 ```json
-{ "keys" : ["ctrl+m"], "command" : "show_panel" , "args" : {"panel": "output.gotools_oracle", "toggle": true}},
+{ "keys" : ["ctrl+m"], "command" : "show_panel" , "args" : {"panel": "output.gotools_guru", "toggle": true}},
 ```
 
 #### Rename (experimental)
