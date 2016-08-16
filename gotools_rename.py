@@ -12,7 +12,8 @@ class GotoolsRenameCommand(sublime_plugin.TextCommand):
     return GoBuffers.is_go_source(self.view)
 
   def run(self, edit):
-    self.view.window().show_input_panel("Go rename:", "", self.do_rename, None, None)
+    initial_text = self.view.substr(self.view.word(self.view.sel()[0].begin()))
+    self.view.window().show_input_panel("Go rename:", initial_text, self.do_rename, None, None)
 
   def do_rename(self, name):
     filename, _row, _col, offset, _offset_end = Buffers.location_at_cursor(self.view)
