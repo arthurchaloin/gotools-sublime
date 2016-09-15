@@ -23,11 +23,11 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 - **Step 1**: Install golang and go tools by yourself: gocode, goimports, guru, gorename, golint, and make sure the `$GOPATH/bin` is added into `$PATH` (Or you can set them in Golang's global "Settings - User" later).
 
     ```
-    go get github.com/nsf/gocode
-    go get github.com/golang/lint/golint
-    go get golang.org/x/tools/cmd/guru
-    go get golang.org/x/tools/cmd/goimports
-    go get golang.org/x/tools/cmd/gorename
+    go get -u -v github.com/nsf/gocode
+    go get -u -v github.com/golang/lint/golint
+    go get -u -v golang.org/x/tools/cmd/guru
+    go get -u -v golang.org/x/tools/cmd/goimports
+    go get -u -v golang.org/x/tools/cmd/gorename
     ```
     
 - **Step 2**: Search and install "Golang Tools Integration" from package control.
