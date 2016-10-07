@@ -22,8 +22,11 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 ### Usage
 - **Step 1**: Install golang and go tools by yourself: gocode, goimports, guru, gorename, golint, and make sure the `$GOPATH/bin` is added into `$PATH` (Or you can set them in Golang's global "Settings - User" later).
 
-    ```
+    ```bash
     go get -u -v github.com/nsf/gocode
+    # OR mdempsky/gocode for better performance
+    go get -u -v github.com/mdempsky/gocode
+    
     go get -u -v github.com/golang/lint/golint
     go get -u -v golang.org/x/tools/cmd/guru
     go get -u -v golang.org/x/tools/cmd/goimports
@@ -38,7 +41,6 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 
     ```json
     {
-        // Additional situations to trigger auto complete
         "auto_complete_triggers": [{"selector": "source.go - string - comment - constant.numeric", "characters": "."}]
     }
     ```
@@ -47,14 +49,13 @@ https://github.com/ironcladlou/GoTools/issues/121); [discuss-2](https://github.c
 
     ```json
     {
-        // Controls what scopes auto complete will be triggered in
         "auto_complete_selector": "meta.tag - punctuation.definition.tag.begin, source - comment - string - constant.numeric"
     }
     ```
 
 ------------------
 
-** Introduction below comes from GoTools project **
+**Introduction below comes from GoTools project**
 
 # GoTools
 
