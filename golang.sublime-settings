@@ -18,6 +18,8 @@
   "autocomplete": true,
 
   // Enable GoTools debugging output to the Sublime console.
-  "debug_enabled": false
+  "debug_enabled": false,
 
+  // Enable gocode client mode, github.com/mdempsky/gocode needed
+  "gocode_client_mode": false
 }
