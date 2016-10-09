@@ -21,8 +21,8 @@ class GotoolsSuggestions(sublime_plugin.EventListener):
     if not GoBuffers.is_go_source(view): return
     if not golangconfig.setting_value("autocomplete")[0]: return
 
-    gocodeFlags = ["-f=json", "-sock=none"] if golangconfig.setting_value("gocode_client_mode")[0] else ["-f=json"]
-    suggestionsJsonStr, stderr, rc = ToolRunner.run(view, "gocode", gocodeFlags + ["autocomplete", view.file_name(), str(locations[0])], stdin=Buffers.buffer_text(view))
+    gocodeFlag = ["-f=json", "-sock=none"] if golangconfig.setting_value("gocode_client_mode")[0] else ["-f=json"]
+    suggestionsJsonStr, stderr, rc = ToolRunner.run(view, "gocode", gocodeFlag + ["autocomplete", view.file_name(), str(locations[0])], stdin=Buffers.buffer_text(view))
 
     suggestionsJson = json.loads(suggestionsJsonStr)
 
