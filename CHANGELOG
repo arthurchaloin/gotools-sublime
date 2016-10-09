@@ -1,5 +1,10 @@
 *** Golang Tools Integration ***
 
+2016/10/10	v1.0.8
++ Add alternative gocode for better autocomplete performance -- Thanks @jostyee
+	1. go get -u -v github.com/mdempsky/gocode
+	2(optional). Set the Golang config: "gocode_client_mode": true
+
 2016/05/28	v1.0.7
 + Fix an issue: #issue13
 
