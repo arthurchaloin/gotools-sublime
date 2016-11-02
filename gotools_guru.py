@@ -28,8 +28,11 @@ class GotoolsGuruCommand(sublime_plugin.TextCommand):
     package_scope = []
     project_package = golangconfig.setting_value("project_package", view=self.view)[0]
     if project_package:
-      for p in golangconfig.setting_value("build_packages", view=self.view)[0]:
-        package_scope.append(os.path.join(project_package, p))
+      if not golangconfig.setting_value("build_packages")[0]:
+        package_scope.append(project_package)
+      else:
+        for p in golangconfig.setting_value("build_packages", view=self.view)[0]:
+          package_scope.append(os.path.join(project_package, p))
 
     sublime.active_window().run_command("hide_panel", {"panel": "output.gotools_guru"})
     self.do_plain_guru(command, pos, package_scope)
