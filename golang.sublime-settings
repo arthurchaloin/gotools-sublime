@@ -21,5 +21,8 @@
   "debug_enabled": false,
 
   // Enable gocode client mode, github.com/mdempsky/gocode needed
-  "gocode_client_mode": false
+  "gocode_client_mode": false,
+
+  // adds to the guru_scope the current package of the the working file
+  "guru_use_current_package": true
 }

@@ -34,6 +34,19 @@ class GotoolsGuruCommand(sublime_plugin.TextCommand):
         for p in golangconfig.setting_value("build_packages", view=self.view)[0]:
           package_scope.append(os.path.join(project_package, p))
 
+    # add local package to guru scope
+    if golangconfig.setting_value("guru_use_current_package")[0]:
+        current_file_path = os.path.realpath(os.path.dirname(self.view.file_name()))
+        toolpath, env = golangconfig.subprocess_info('guru', ['GOPATH', 'PATH'], view=self.view)
+        GOPATH = os.path.realpath(env["GOPATH"])
+        GOPATH = os.path.join(GOPATH,"src")
+        local_package = os.path.relpath(current_file_path, GOPATH)
+        if sublime.platform() == 'windows':
+            local_package = local_package.replace('\\', '/')
+        Logger.status("GOPATH: "+GOPATH)
+        Logger.status("local_package: "+local_package)
+        package_scope.append(local_package)
+
     sublime.active_window().run_command("hide_panel", {"panel": "output.gotools_guru"})
     self.do_plain_guru(command, pos, package_scope)
 
