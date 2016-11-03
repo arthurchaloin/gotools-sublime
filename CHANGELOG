@@ -1,5 +1,10 @@
 *** Golang Tools Integration ***
 
+2016/10/10	v1.0.10
++ make it easier to use guru -- Thanks @jostyee
+	1. make "build_packages" to be optional
+	2. add "guru_use_current_package" for auto-config
+	
 2016/10/10	v1.0.9
 + Add alternative gocode for better autocomplete performance -- Thanks @jostyee
 	1. go get -u -v github.com/mdempsky/gocode
