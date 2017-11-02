@@ -1,3 +1,5 @@
+# I've changed my IDE choice to JetBrains' Gogland.
+
 # Golang Tools Integration
 
 It's a fork version of [GoTools](https://github.com/ironcladlou/GoTools) by ironcladlou. I create this project because ironcladlou has decided to abandon GoTools project, and I want to use this plugin together with [Golang Build](https://github.com/golang/sublime-build) (by wbond) ([discuss-1](
