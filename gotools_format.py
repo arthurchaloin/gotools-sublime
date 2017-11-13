@@ -27,7 +27,7 @@ class GotoolsFormat(sublime_plugin.TextCommand):
       args = ["-e", "-s"]
     elif golangconfig.setting_value("format_backend")[0] in ["goimports", "both"] :
       command = "goimports"
-      args = ["-e", "-srcdir=%s" % os.path.dirname(self.view.file_name())]
+      args = ["-e"]
 
     stdout, stderr, rc = ToolRunner.run(self.view, command, args, stdin=Buffers.buffer_text(self.view))
 
@@ -96,7 +96,7 @@ class GotoolsFormat(sublime_plugin.TextCommand):
 
     marks = []
     for error in stderr.splitlines():
-      match = re.match("(.*):(\d+):(\d+):", error)
+      match = re.match("((?:[a-zA-Z]:)?.*):(\d+):(\d+):", error)
       if not match or not match.group(2):
         Logger.log("skipping unrecognizable error:\n" + error + "\nmatch:" + str(match))
         continue
